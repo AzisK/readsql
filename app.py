@@ -6,14 +6,13 @@ file_name = 'sql_example.sql'
 
 def replace(lines, substitution):
     regex = [m for m in re.finditer(substitution['regex'], lines, re.IGNORECASE)]
-    if regex:
-        for g in regex:
-            start = g.start(substitution['group'])
-            lines = (
-                lines[:start]
-                + substitution['substitute']
-                + lines[start + len(substitution['substitute']) :]
-            )
+    for g in regex:
+        start = g.start(substitution['group'])
+        lines = (
+            lines[:start]
+            + substitution['substitute']
+            + lines[start + len(substitution['substitute']) :]
+        )
     return lines
 
 
