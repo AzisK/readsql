@@ -14,7 +14,11 @@ NOT_SUBTITUTION = {'regex': r'(?:\s)(not)(?:\s)', 'group': 1, 'substitute': 'NOT
 NULL_SUBTITUTION = {'regex': r'(?:\s)(null)(?:\s|;)', 'group': 1, 'substitute': 'NULL'}
 SUM_SUBTITUTION = {'regex': r'(?:\s)(sum)(?:\()', 'group': 1, 'substitute': 'SUM'}
 COUNT_SUBTITUTION = {'regex': r'(?:\s)(count)(?:\()', 'group': 1, 'substitute': 'COUNT'}
-DISTINCT_SUBTITUTION = {'regex': r'(?:\s)(distinct)(?:\s)', 'group': 1, 'substitute': 'DISTINCT'}
+DISTINCT_SUBTITUTION = {
+    'regex': r'(?:\s)(distinct)(?:\s)',
+    'group': 1,
+    'substitute': 'DISTINCT',
+}
 GROUP_SUBTITUTION = {'regex': r'(?:\s)(group)(?:\s)', 'group': 1, 'substitute': 'GROUP'}
 BY_SUBTITUTION = {'regex': r'(?:\s)(by)(?:\s)', 'group': 1, 'substitute': 'BY'}
 
@@ -26,12 +30,11 @@ def replace(lines, substitution):
     regex = [m for m in re.finditer(substitution['regex'], lines, re.IGNORECASE)]
     if regex:
         for g in regex:
+            start = g.start(substitution['group'])
             lines = (
-                lines[: g.start(substitution['group'])]
+                lines[:start]
                 + substitution['substitute']
-                + lines[
-                    g.start(substitution['group']) + len(substitution['substitute']) :
-                ]
+                + lines[start + len(substitution['substitute']) :]
             )
     return lines
 
