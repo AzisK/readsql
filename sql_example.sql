@@ -13,3 +13,11 @@ select * from (select * FROM languages) as t
 
 selECT 1,2,3
 where bounty is null
+
+SELECT couNT(*), SUM(mass)
+from universe;
+
+select distinct stars
+from universe
+
+SELECT sun from univere group by galaxy

@@ -12,6 +12,12 @@ AS_SUBTITUTION = {'regex': r'(?:\s)(as)(?:\s)', 'group': 1, 'substitute': 'AS'}
 IS_SUBTITUTION = {'regex': r'(?:\s)(is)(?:\s)', 'group': 1, 'substitute': 'IS'}
 NOT_SUBTITUTION = {'regex': r'(?:\s)(not)(?:\s)', 'group': 1, 'substitute': 'NOT'}
 NULL_SUBTITUTION = {'regex': r'(?:\s)(null)(?:\s|;)', 'group': 1, 'substitute': 'NULL'}
+SUM_SUBTITUTION = {'regex': r'(?:\s)(sum)(?:\()', 'group': 1, 'substitute': 'SUM'}
+COUNT_SUBTITUTION = {'regex': r'(?:\s)(count)(?:\()', 'group': 1, 'substitute': 'COUNT'}
+DISTINCT_SUBTITUTION = {'regex': r'(?:\s)(distinct)(?:\s)', 'group': 1, 'substitute': 'DISTINCT'}
+GROUP_SUBTITUTION = {'regex': r'(?:\s)(group)(?:\s)', 'group': 1, 'substitute': 'GROUP'}
+BY_SUBTITUTION = {'regex': r'(?:\s)(by)(?:\s)', 'group': 1, 'substitute': 'BY'}
+
 
 file_name = 'sql_example.sql'
 
@@ -41,6 +47,11 @@ with open(file_name, 'r') as inp:
         IS_SUBTITUTION,
         NOT_SUBTITUTION,
         NULL_SUBTITUTION,
+        SUM_SUBTITUTION,
+        COUNT_SUBTITUTION,
+        DISTINCT_SUBTITUTION,
+        GROUP_SUBTITUTION,
+        BY_SUBTITUTION,
     ]:
         lines = replace(lines, sub)
 
