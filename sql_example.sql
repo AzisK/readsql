@@ -14,7 +14,7 @@ select * from (select * FROM languages) as t
 selECT 1,2,3
 where bounty is null
 
-SELECT couNT(*), SUM(mass)
+SELECT couNT(*), Sum(mass)
 from universe;
 
 select distinct stars
