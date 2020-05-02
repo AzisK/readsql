@@ -26,3 +26,9 @@ SELECT sun from univere group by galaxy
   `id` VARCHAR(100) NOT NULL auto_increment,
   `name` VARCHAR(120) NOT NULL default 'unknown'
 )
+
+select min(date) from calendar
+
+select max(elephant) from jungle group by forest;
+
+SELECT avg(mass) from jungle where animal=gorilla
