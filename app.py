@@ -34,6 +34,9 @@ def read_regexes():
 
     with open(file_name, 'r') as inp:
         for line in inp:
+            if line.startswith('#') or not line.strip():
+                continue
+
             regex_line = line.split('__')
             regex_dict = {
                 'substitute': regex_line[0],
