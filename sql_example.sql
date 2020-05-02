@@ -21,3 +21,8 @@ select distinct stars
 from universe
 
 SELECT sun from univere group by galaxy
+
+ Create table if not exists `tblsample` (
+  `id` VARCHAR(100) NOT NULL auto_increment,
+  `name` VARCHAR(120) NOT NULL default 'unknown'
+)
