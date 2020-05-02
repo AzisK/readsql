@@ -5,8 +5,6 @@ AS__(?:\s)(as)(?:\s)__1
 IS__(?:\s)(is)(?:\s)__1
 NOT__(?:\s)(not)(?:\s)__1
 NULL__(?:\s)(null)(?:\s|;|\))__1
-SUM__(?:\s)(sum)(?:\()__1
-COUNT__(?:\s)(count)(?:\()__1
 DISTINCT__(?:\s)(distinct)(?:\s)__1
 GROUP__(?:\s)(group)(?:\s)__1
 BY__(?:\s)(by)(?:\s)__1
@@ -14,3 +12,10 @@ CREATE__(?:^|\s|\()(create)(?:\s)__1
 TABLE__(?:\s)(table)(?:\s)__1
 IF__(?:\s)(if)(?:\s)__1
 EXISTS__(?:\s)(exists)(?:\s)__1
+
+# Aggregations
+SUM__(?:\s)(sum)(?:\()__1
+COUNT__(?:\s)(count)(?:\()__1
+MIN__(?:\s)(min)(?:\()__1
+MAX__(?:\s)(max)(?:\()__1
+AVG__(?:\s)(avg)(?:\()__1
