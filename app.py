@@ -17,7 +17,7 @@ def replace(lines, substitution):
     return lines
 
 
-def read(file_name):
+def read_file(file_name):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
@@ -26,6 +26,11 @@ def read(file_name):
 
         with open(file_name, 'w') as out:
             out.write(lines)
+
+def read(string):
+    for sub in read_regexes():
+        string = replace(string, sub)
+    return string
 
 def read_regexes():
     file_name = 'regexes.txt'
@@ -49,4 +54,4 @@ def read_regexes():
     return rules
 
 if __name__ == '__main__':
-    read(file_name)
+    read_file(file_name)
