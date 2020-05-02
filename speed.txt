@@ -1,0 +1,2 @@
+func:func:read_file__took: 0.002918 sec
+func:func:read_python_file__took: 0.001111 sec

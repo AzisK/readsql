@@ -1,4 +1,25 @@
 import re
+from functools import wraps
+from time import time
+
+
+def timing(f):
+    @wraps(f)
+    def wrap(*args, **kw):
+        ts = time()
+        result = f(*args, **kw)
+        te = time()
+        timing_string = f'func:{f.__name__}__took: {te-ts:2.6f} sec'
+
+        with open('speed.txt', 'r') as inp:
+            lines = inp.read()
+            lines = re.sub(f"func:{f.__name__}__{'.*'}", timing_string, lines)
+            with open('speed.txt', 'w') as out:
+                out.write(lines)
+
+        return result
+
+    return wrap
 
 
 def replace(lines, substitution):
@@ -14,6 +35,7 @@ def replace_part_of_string(string, part, start):
     return string
 
 
+@timing
 def read_file(file_name='sql_example.sql'):
     with open(file_name, 'r') as inp:
         lines = inp.read()
@@ -25,6 +47,7 @@ def read_file(file_name='sql_example.sql'):
             out.write(lines)
 
 
+@timing
 def read_python_file(file_name='sql_example_in_python.py'):
 
     with open(file_name, 'r') as inp:
