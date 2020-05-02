@@ -10,3 +10,6 @@ select * from (select * FROM languages) t;
 
 select * from (select * FROM languages) as t
   where gold is not null;
+
+selECT 1,2,3
+where bounty is null
