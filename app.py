@@ -13,7 +13,7 @@ def timing(f):
 
         with open('speed.txt', 'r') as inp:
             lines = inp.read()
-            lines = re.sub(f"func:{f.__name__}__{'.*'}", timing_string, lines)
+            lines = re.sub(f'func:{f.__name__}__.*', timing_string, lines)
             with open('speed.txt', 'w') as out:
                 out.write(lines)
 
