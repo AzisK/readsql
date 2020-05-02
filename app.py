@@ -1,60 +1,6 @@
 import re
 
 
-SELECT_SUBSTITUTION = {
-    'regex': r'(?:^|\s|\()(select)(?:\s)',
-    'group': 1,
-    'substitute': 'SELECT',
-}
-FROM_SUBSTITUTION = {'regex': r'(?:\s)(from)(?:\s)', 'group': 1, 'substitute': 'FROM'}
-WHERE_SUBSTITUTION = {
-    'regex': r'(?:\s)(where)(?:\s)',
-    'group': 1,
-    'substitute': 'WHERE',
-}
-AS_SUBSTITUTION = {'regex': r'(?:\s)(as)(?:\s)', 'group': 1, 'substitute': 'AS'}
-IS_SUBSTITUTION = {'regex': r'(?:\s)(is)(?:\s)', 'group': 1, 'substitute': 'IS'}
-NOT_SUBSTITUTION = {'regex': r'(?:\s)(not)(?:\s)', 'group': 1, 'substitute': 'NOT'}
-NULL_SUBSTITUTION = {
-    'regex': r'(?:\s)(null)(?:\s|;|\))',
-    'group': 1,
-    'substitute': 'NULL',
-}
-SUM_SUBSTITUTION = {'regex': r'(?:\s)(sum)(?:\()', 'group': 1, 'substitute': 'SUM'}
-COUNT_SUBSTITUTION = {
-    'regex': r'(?:\s)(count)(?:\()',
-    'group': 1,
-    'substitute': 'COUNT',
-}
-DISTINCT_SUBSTITUTION = {
-    'regex': r'(?:\s)(distinct)(?:\s)',
-    'group': 1,
-    'substitute': 'DISTINCT',
-}
-GROUP_SUBSTITUTION = {
-    'regex': r'(?:\s)(group)(?:\s)',
-    'group': 1,
-    'substitute': 'GROUP',
-}
-BY_SUBSTITUTION = {'regex': r'(?:\s)(by)(?:\s)', 'group': 1, 'substitute': 'BY'}
-CREATE_SUBSTITUTION = {
-    'regex': r'(?:^|\s|\()(create)(?:\s)',
-    'group': 1,
-    'substitute': 'CREATE',
-}
-TABLE_SUBSTITUTION = {
-    'regex': r'(?:\s)(table)(?:\s)',
-    'group': 1,
-    'substitute': 'TABLE',
-}
-IF_SUBSTITUTION = {'regex': r'(?:\s)(if)(?:\s)', 'group': 1, 'substitute': 'IF'}
-EXISTS_SUBSTITUTION = {
-    'regex': r'(?:\s)(exists)(?:\s)',
-    'group': 1,
-    'substitute': 'EXISTS',
-}
-
-
 file_name = 'sql_example.sql'
 
 
@@ -75,29 +21,29 @@ def read(file_name):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
-        for sub in [
-            SELECT_SUBSTITUTION,
-            FROM_SUBSTITUTION,
-            WHERE_SUBSTITUTION,
-            AS_SUBSTITUTION,
-            IS_SUBSTITUTION,
-            NOT_SUBSTITUTION,
-            NULL_SUBSTITUTION,
-            SUM_SUBSTITUTION,
-            COUNT_SUBSTITUTION,
-            DISTINCT_SUBSTITUTION,
-            GROUP_SUBSTITUTION,
-            BY_SUBSTITUTION,
-            CREATE_SUBSTITUTION,
-            TABLE_SUBSTITUTION,
-            IF_SUBSTITUTION,
-            EXISTS_SUBSTITUTION,
-        ]:
+        for sub in read_regexes():
             lines = replace(lines, sub)
 
         with open(file_name, 'w') as out:
             out.write(lines)
 
+def read_regexes():
+    file_name = 'regexes.txt'
 
-if __name__ == "__main__":
+    rules = []
+
+    with open(file_name, 'r') as inp:
+        for line in inp:
+            regex_line = line.split('__')
+            regex_dict = {
+                'substitute': regex_line[0],
+                'regex': regex_line[1],
+                'group': int(regex_line[2]),
+            }
+
+            rules.append(regex_dict)
+
+    return rules
+
+if __name__ == '__main__':
     read(file_name)
