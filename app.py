@@ -14,7 +14,7 @@ def replace_part_of_string(string, part, start):
     return string
 
 
-def read_file(file_name='sql_example.sql'):
+def read_file(file_name='tests/sql_example.sql'):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
@@ -25,7 +25,7 @@ def read_file(file_name='sql_example.sql'):
             out.write(lines)
 
 
-def read_python_file(file_name='sql_example_in_python.py'):
+def read_python_file(file_name='tests/sql_example_in_python.py'):
 
     with open(file_name, 'r') as inp:
         lines = inp.read()
