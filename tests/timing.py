@@ -38,8 +38,8 @@ def timing(f):
 
     return wrap
 
+
 def file_write_lines(file_name, lines):
     with open(file_name, 'w') as out:
         for line in lines:
             out.write(f'{line}\n')
-
