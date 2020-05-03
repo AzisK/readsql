@@ -1,10 +1,10 @@
-import app
+import readsql.__main__ as rsql
 from tests.timing import timing
 
 
 @timing
 def test_double_select():
-    sql = app.read(
+    sql = rsql.read(
         '''
         select * from (select * FROM languages) as t
          where gold is not null;    
@@ -19,7 +19,7 @@ def test_double_select():
 
 @timing
 def test_select_from_groub_by_where():
-    sql = app.read(
+    sql = rsql.read(
         '''
         select max(height), avg(mass), min(age)  from jungle group by forest where animal=elephant;
     '''
@@ -32,7 +32,7 @@ def test_select_from_groub_by_where():
 
 @timing
 def test_is_not_null():
-    sql = app.read(
+    sql = rsql.read(
         '''
         selECT 1,2,3
         where bounty is null
@@ -47,7 +47,7 @@ def test_is_not_null():
 
 @timing
 def test_distinct():
-    sql = app.read(
+    sql = rsql.read(
         '''
         select distinct stars
         from universe
@@ -62,7 +62,7 @@ def test_distinct():
 
 @timing
 def test_create_table_if_not_exists():
-    sql = app.read(
+    sql = rsql.read(
         '''
          Create table if not exists `tblsample` (
             `id` VARCHAR(100) NOT NULL auto_increment,

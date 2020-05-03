@@ -3,7 +3,13 @@ name = "readsql"
 version = "0.1.0"
 description = "Convert SQL to most human readable format"
 authors = ["Azis <azuolas.krusna@yahoo.com>"]
+maintainers = ["Azis <azuolas.krusna@yahoo.com>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/AzisK/readsql/"
+keywords = ["SQL",
+            "Lint",
+            "Python"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -14,3 +20,7 @@ pytest = "^5.4.1"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.poetry.scripts]
+readsql = "readsql.__main__:change"
+

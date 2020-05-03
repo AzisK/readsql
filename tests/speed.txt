@@ -1,13 +1,13 @@
-func:test_read_file__took: 0.002662 sec
+func:test_read_file__took: 0.002648 sec
 
-func:test_read_python_file__took: 0.000951 sec
+func:test_read_python_file__took: 0.000953 sec
 
-func:test_double_select__took: 0.000232 sec
+func:test_double_select__took: 0.000305 sec
 
-func:test_select_from_groub_by_where__took: 0.000213 sec
+func:test_select_from_groub_by_where__took: 0.000221 sec
 
-func:test_is_not_null__took: 0.000231 sec
+func:test_is_not_null__took: 0.000196 sec
 
-func:test_distinct__took: 0.000223 sec
+func:test_distinct__took: 0.000319 sec
 
-func:test_create_table_if_not_exists__took: 0.000272 sec
+func:test_create_table_if_not_exists__took: 0.000301 sec

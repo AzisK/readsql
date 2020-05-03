@@ -1,4 +1,9 @@
 import re
+import sys
+import os
+
+
+DIR = os.path.dirname(__file__)
 
 
 def replace(lines, substitution):
@@ -21,7 +26,7 @@ def read_file(file_name='tests/sql_example.sql', inplace=True):
         for sub in read_regexes():
             lines = replace(lines, sub)
 
-        if not inplace: 
+        if not inplace:
             return lines
 
         with open(file_name, 'w') as out:
@@ -50,7 +55,7 @@ def read_python_file(file_name='tests/sql_in_python_example.py', inplace=True):
 
             lines = replace_part_of_string(lines, query, g.start(1))
 
-        if not inplace: 
+        if not inplace:
             return lines
 
         with open(file_name, 'w') as out:
@@ -60,11 +65,12 @@ def read_python_file(file_name='tests/sql_in_python_example.py', inplace=True):
 def read(string):
     for sub in read_regexes():
         string = replace(string, sub)
+
     return string
 
 
 def read_regexes():
-    file_name = 'regexes.txt'
+    file_name = f'{DIR}/regexes.txt'
 
     rules = []
 
@@ -85,6 +91,20 @@ def read_regexes():
     return rules
 
 
+def change():
+    if len(sys.argv) > 1:
+        print(read(sys.argv[1]))
+    else:
+        print('Please specify a string to format')
+
+
+def main():
+    if len(sys.argv) > 1:
+        print(read(sys.argv[1]))
+    else:
+        read_file()
+        read_python_file()
+
+
 if __name__ == '__main__':
-    read_file()
-    read_python_file()
+    main()
