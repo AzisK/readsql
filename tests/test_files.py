@@ -1,12 +1,26 @@
 import app
 from tests.timing import timing
+import os
 
 
-@timing
-def test_read_file():
-    app.read_file()
+DIR = os.path.dirname(__file__)
 
 
-@timing
-def test_read_python_file():
-    app.read_python_file()
+def test_read_file_wrap():
+    @timing
+    def test_read_file():
+        return app.read_file(inplace=False)
+
+    example = test_read_file()
+    with open(DIR + '/sql_example_correct.sql', 'r') as inp:
+        assert inp.read() == example
+
+
+def test_read_python_file_wrap():
+    @timing
+    def test_read_python_file():
+        return app.read_python_file(inplace=False)
+
+    example = test_read_file()
+    with open(DIR + '/sql_in_python_example_correct.py', 'r') as inp:
+        assert inp.read() == example
