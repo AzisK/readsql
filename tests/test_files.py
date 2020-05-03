@@ -21,6 +21,6 @@ def test_read_python_file_wrap():
     def test_read_python_file():
         return app.read_python_file(inplace=False)
 
-    example = test_read_file()
+    example = test_read_python_file()
     with open(DIR + '/sql_in_python_example_correct.py', 'r') as inp:
         assert inp.read() == example
