@@ -14,18 +14,21 @@ def replace_part_of_string(string, part, start):
     return string
 
 
-def read_file(file_name='tests/sql_example.sql'):
+def read_file(file_name='tests/sql_example.sql', inplace=True):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
         for sub in read_regexes():
             lines = replace(lines, sub)
 
+        if not inplace: 
+            return lines
+
         with open(file_name, 'w') as out:
             out.write(lines)
 
 
-def read_python_file(file_name='tests/sql_example_in_python.py'):
+def read_python_file(file_name='tests/sql_in_python_example.py', inplace=True):
 
     with open(file_name, 'r') as inp:
         lines = inp.read()
@@ -46,6 +49,9 @@ def read_python_file(file_name='tests/sql_example_in_python.py'):
                 query = replace(query, sub)
 
             lines = replace_part_of_string(lines, query, g.start(1))
+
+        if not inplace: 
+            return lines
 
         with open(file_name, 'w') as out:
             out.write(lines)
