@@ -13,6 +13,7 @@ keywords = ["SQL",
 
 [tool.poetry.dependencies]
 python = "^3.6"
+argparse = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.1"
