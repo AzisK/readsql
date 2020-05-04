@@ -1,6 +1,6 @@
+import os
 from functools import wraps
 from time import time
-import os
 
 
 def timing(f):
