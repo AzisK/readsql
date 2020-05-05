@@ -1,6 +1,6 @@
 import os
 
-import readsql.app as rsql
+import readsql.__main__ as rsql
 
 DIR = os.path.dirname(__file__)
 

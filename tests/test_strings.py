@@ -1,4 +1,4 @@
-import readsql.app as rsql
+import readsql.__main__ as rsql
 from tests.timing import timing
 
 
