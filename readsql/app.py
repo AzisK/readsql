@@ -1,7 +1,7 @@
-import re
-import sys
 import os
+import re
 
+from readsql.parse_args import validate, parse_args
 
 DIR = os.path.dirname(__file__)
 
@@ -19,7 +19,7 @@ def replace_part_of_string(string, part, start):
     return string
 
 
-def read_file(file_name='tests/sql_example.sql', inplace=True):
+def read_file(file_name, inplace=True):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
@@ -91,20 +91,23 @@ def read_regexes():
     return rules
 
 
-def change():
-    if len(sys.argv) > 1:
-        print(read(sys.argv[1]))
-    else:
-        print('Please specify a string to format')
+def command_line_file(args):
+    validate(args)
+    lines = read_file(args.path, inplace=False)
+
+    print(f'{args.path} has been reformatted to:\n', lines)
+
+    with open(args.path, 'w') as out:
+        out.write(lines)
 
 
-def main():
-    if len(sys.argv) > 1:
-        print(read(sys.argv[1]))
+def command_line():
+    args = parse_args()
+    if args.string:
+        print(read(args.path))
     else:
-        read_file()
-        read_python_file()
+        command_line_file(args)
 
 
 if __name__ == '__main__':
-    main()
+    command_line('select sushi')
