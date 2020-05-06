@@ -9,7 +9,7 @@ def timing(f):
         ts = time()
         result = f(*args, **kw)
         te = time()
-        timing_string = f'func:{f.__name__}__took: {te-ts:2.6f} sec'
+        timing_string = f'func:{f.__name__}__var:({args, kw})__took: {te-ts:2.6f} sec'
         print(timing_string)
 
         is_function = False
@@ -23,7 +23,7 @@ def timing(f):
                 for line in inp:
                     if not line.strip():
                         continue
-                    if line.startswith(f'func:{f.__name__}__'):
+                    if line.startswith(f'func:{f.__name__}__var:({args, kw})__'):
                         is_function = True
                         new_lines.append(timing_string)
                     else:

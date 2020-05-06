@@ -1,13 +1,15 @@
-func:test_read_file__took: 0.002383 sec
+func:test_read_python_file__var:(((), {'variable': 'sql'}))__took: 0.000690 sec
 
-func:test_read_python_file__took: 0.000798 sec
+func:test_read_file__var:(((), {}))__took: 0.002316 sec
 
-func:test_double_select__took: 0.000261 sec
+func:test_read_python_file__var:(((), {}))__took: 0.000885 sec
 
-func:test_select_from_groub_by_where__took: 0.000212 sec
+func:test_double_select__var:(((), {}))__took: 0.000245 sec
 
-func:test_is_not_null__took: 0.000208 sec
+func:test_select_from_groub_by_where__var:(((), {}))__took: 0.000202 sec
 
-func:test_distinct__took: 0.000202 sec
+func:test_is_not_null__var:(((), {}))__took: 0.000236 sec
 
-func:test_create_table_if_not_exists__took: 0.000257 sec
+func:test_distinct__var:(((), {}))__took: 0.000196 sec
+
+func:test_create_table_if_not_exists__var:(((), {}))__took: 0.000252 sec
