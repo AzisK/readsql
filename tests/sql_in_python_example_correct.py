@@ -10,13 +10,13 @@ query = """
 
 
 def get_query():
-    limit = 6
     query = f"SELECT MAX(weight) FROM world WHERE ocean='Atlantic'"
     return query
 
 
 def get_query():
-    query = f"SELECT speed FROM world WHERE animal='dolphin' limit {limit}"
+    limit = 6
+    query = f"SELECT speed FROM world WHERE animal='dolphin' LIMIT {limit}"
     return query
 
 
