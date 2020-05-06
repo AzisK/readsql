@@ -93,7 +93,11 @@ def read_regexes():
 
 def command_line_file(args):
     validate(args)
-    lines = read_file(args.path, inplace=False)
+
+    if args.path.endswith('.py'):
+        lines = read_python_file(args.path, inplace=False)
+    else:
+        lines = read_file(args.path, inplace=False)
 
     print(f'{args.path} has been reformatted to:\n', lines)
 
