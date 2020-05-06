@@ -10,6 +10,7 @@ def parse_args():
     )
     parser.add_argument('path', type=str, help='Path to the file to be converted')
     parser.add_argument('-s', '--string', action='store_true', help='Read a string')
+    parser.add_argument('-py', '--python_var', action='store', default='query', help='Look for variables in a Python file')
 
     args = parser.parse_args()
 

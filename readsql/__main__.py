@@ -95,7 +95,7 @@ def command_line_file(args):
     validate(args)
 
     if args.path.endswith('.py'):
-        lines = read_python_file(args.path, inplace=False)
+        lines = read_python_file(args.path, args.python_var, inplace=False)
     else:
         lines = read_file(args.path, inplace=False)
 
