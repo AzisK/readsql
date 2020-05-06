@@ -8,6 +8,10 @@ Convert SQL to most human readable format
 
 # Usage
 
+- Format SQL code provided in command line
+    - `readsql <SQL_STRING> -s`
+    - e.g., `readsql 'select sushi from tokyo' -s`
+    - prints out `SELECT sushi FROM tokyo`
 - Format an SQL file 
     - `readsql <FILE_PATH>` 
     - e.g., `readsql sql_example.sql`
@@ -28,10 +32,6 @@ def get_query():
     sql = f"SELECT speed FROM world WHERE animal='dolphin' LIMIT {limit}"
     return sql
 ```
-- Format SQL code provided in command line
-    - `readsql <SQL_STRING> -s`
-    - e.g., `readsql 'select sushi from tokyo' -s`
-    - prints out `SELECT sushi FROM tokyo`
 
 # Development
 Having the repo cloned
