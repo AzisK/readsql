@@ -12,6 +12,7 @@ CREATE__(?:^|\s|\()(create)(?:\s)__1
 TABLE__(?:\s)(table)(?:\s)__1
 IF__(?:\s)(if)(?:\s)__1
 EXISTS__(?:\s)(exists)(?:\s)__1
+LIMIT__(?:\s)(limit)(?:\s)__1
 
 # Aggregations
 SUM__(?:\s)(sum)(?:\()__1
