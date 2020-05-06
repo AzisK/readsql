@@ -33,8 +33,7 @@ def read_file(file_name, inplace=True):
             out.write(lines)
 
 
-def read_python_file(file_name='tests/sql_in_python_example.py', inplace=True):
-
+def read_python_file(file_name, variable='query', inplace=True):
     with open(file_name, 'r') as inp:
         lines = inp.read()
         subs = []
@@ -42,7 +41,8 @@ def read_python_file(file_name='tests/sql_in_python_example.py', inplace=True):
         regex = [
             m
             for m in re.finditer(
-                r'(?:\s*query\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')', lines
+                r'(?:\s*' + variable + r'\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
+                lines,
             )
         ]
         if regex:
