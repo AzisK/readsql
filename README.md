@@ -6,19 +6,24 @@ Convert SQL to most human readable format
 
 `pip install readsql`
 
-# Usage
+# Usage 
 
-- Format SQL code provided in command line
+1. Format SQL code provided in command line
     - `readsql <SQL_STRING> -s`
-    - e.g., `readsql 'select sushi from tokyo' -s`
-    - prints out `SELECT sushi FROM tokyo`
-- Format an SQL file 
+2. Format an SQL file 
     - `readsql <FILE_PATH>` 
-    - e.g., `readsql sql_example.sql`
-    - given a Python file (ends with `.py`), it looks for variables `query` and formats their insides
-    - variable to represent SQL code can be change with `-py` option
-    - e.g., `readsql sql_in_python_variable_example.py -py sql`
-    - given a Python file with this code
+
+# Usage examples
+
+1. `readsql <SQL_STRING> -s`
+    - `readsql 'select sushi from tokyo' -s`
+    - returns `SELECT sushi FROM tokyo`
+2. `readsql <FILE_PATH>`
+    1. `readsql sql_example.sql`
+    2. given a Python file (ends with `.py`), it looks for variables `query` and formats their insides
+        - variable to represent SQL code can be changed with `-py` option
+        - `readsql sql_in_python_variable_example.py -py sql`
+        - given a Python file with this code
 ```python
 def get_query():
     limit = 6
@@ -39,7 +44,7 @@ Having the repo cloned
 - `python readsql tests/sql_example.sql` converts example SQL code to easier readable format
 - `python readsql tests/sql_in_python_example.py` converts example SQL code in Python (it looks for variables `query`)
 - we can change the SQL variable with `-py` option `python readsql tests/sql_in_python_variable_example.py -py sql` 
-- `python readsql "select gold from mine" -s` takes the `"select gold from mine"` string as input and outputs it formatted
+- `python readsql "select sushi from tokyo" -s` takes the `"select sushi from tokyo"` string as input and outputs it formatted
 
 # Testing
 
