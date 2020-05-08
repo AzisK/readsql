@@ -1,0 +1,6 @@
+-   id: readsql
+    name: readsql
+    description: Python SQL code formatter
+    entry: readsql
+    language: python
+    types: [python]
