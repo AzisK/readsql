@@ -2,6 +2,8 @@
 
 Convert SQL to most human readable format
 
+It can convert SQL code and even SQL strings in other languages (only Python ar the moment)
+
 # Installation 
 
 `pip install readsql`
