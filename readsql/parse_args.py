@@ -13,8 +13,8 @@ def parse_args():
     parser.add_argument(
         '-py',
         '--python_var',
-        action='store',
-        default='query',
+        nargs='+',
+        default=['query'],
         help='Look for certain variables in a Python file (default variable is query)',
     )
 

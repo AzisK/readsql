@@ -33,7 +33,10 @@ def read_file(file_name, inplace=True):
             out.write(lines)
 
 
-def read_python_file(file_name, variable='query', inplace=True):
+def read_python_file(file_name, variables=None, inplace=True):
+    variables = variables if variables else ['query']
+    variables_regex = f"(?:{'|'.join(variables)})" if len(variables) > 1 else variables[0]
+
     with open(file_name, 'r') as inp:
         lines = inp.read()
         subs = []
@@ -41,7 +44,7 @@ def read_python_file(file_name, variable='query', inplace=True):
         regex = [
             m
             for m in re.finditer(
-                r'(?:\s*' + variable + r'\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
+                r'(?:\s*' + variables_regex + r'\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
                 lines,
             )
         ]
