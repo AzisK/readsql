@@ -2,18 +2,18 @@
 
 Convert SQL to most human readable format
 
-It can convert SQL code and even SQL strings in other languages (only Python ar the moment)
+It can convert SQL code and even SQL strings in other languages (only Python at the moment)
 
-# Installation 
+# Installation
 
 `pip install readsql`
 
-# Usage 
+# Usage
 
 1. Format SQL code provided in command line
     - `readsql <SQL_STRING> -s`
-2. Format an SQL file 
-    - `readsql <FILE_PATH>` 
+2. Format an SQL file
+    - `readsql <FILE_PATH>`
 
 # Usage examples
 
@@ -32,7 +32,7 @@ def get_query():
     sql = f"SELEct speed from world where animal='dolphin' limit {limit}"
     return sql
 ```
-converts it to 
+converts it to
 ```python
 def get_query():
     limit = 6
@@ -45,7 +45,7 @@ Having the repo cloned
 
 - `python readsql tests/sql_example.sql` converts example SQL code to easier readable format
 - `python readsql tests/sql_in_python_example.py` converts example SQL code in Python (it looks for variables `query`)
-- we can change the SQL variable with `-py` option `python readsql tests/sql_in_python_variable_example.py -py sql` 
+- we can change the SQL variable with `-py` option `python readsql tests/sql_in_python_variable_example.py -py sql`
 - `python readsql "select sushi from tokyo" -s` takes the `"select sushi from tokyo"` string as input and outputs it formatted
 
 # Testing
