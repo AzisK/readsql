@@ -17,3 +17,7 @@ func:test_create_table_if_not_exists__var:(((), {}))__took: 0.001050 sec
 func:test_read_python_file__var:(((), {'variable': ['sql', 'query_template', 'query']}))__took: 0.001898 sec
 
 func:test_read_python_multifile__var:(((), {}))__took: 0.002254 sec
+
+func:test_command_line_string__var:(((), {}))__took: 0.000550 sec
+
+func:test_command_line_strings__var:(((), {}))__took: 0.000818 sec

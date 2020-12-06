@@ -125,7 +125,7 @@ def command_line_file(args):
 def command_line():
     args = parse_args()
     if args.string:
-        print(read(args.path))
+        print('\n'.join([read(p) + '\n' for p in args.path]))
     else:
         command_line_file(args)
 

@@ -1,3 +1,5 @@
+import argparse
+
 import readsql.__main__ as rsql
 from tests.timing import timing
 
@@ -7,12 +9,12 @@ def test_double_select():
     sql = rsql.read(
         '''
         select * from (select * FROM languages) as t
-         where gold is not null;    
+         where gold is not null;
     '''
     )
     sql_correct = '''
         SELECT * FROM (SELECT * FROM languages) AS t
-         WHERE gold IS NOT NULL;    
+         WHERE gold IS NOT NULL;
     '''
     sql == sql_correct
 
@@ -77,3 +79,49 @@ def test_create_table_if_not_exists():
         )
     '''
     assert sql == sql_correct
+
+
+@timing
+def test_command_line_string():
+    sql = 'select sushi from tokyo'
+
+    args = argparse.Namespace(
+        nothing=False,
+        path=[sql],
+        python_var=['query'],
+        string=True,
+    )
+
+    sql_adjusted = rsql.read(args.path[0])
+
+    sql_correct = 'SELECT sushi FROM tokyo'
+
+    assert sql_adjusted == sql_correct
+
+
+@timing
+def test_command_line_strings():
+    sql1 = '''
+        select * from (select * FROM languages) as t
+         where gold is not null;
+    '''
+
+    sql2 = 'selecT 99 from hundred'
+
+    args = argparse.Namespace(
+        nothing=False,
+        path=[sql1, sql2],
+        python_var=['query'],
+        string=True,
+    )
+
+    sql_adjusted = [rsql.read(s) for s in args.path]
+
+    sql_correct1 = '''
+        SELECT * FROM (SELECT * FROM languages) AS t
+         WHERE gold IS NOT NULL;
+    '''
+    sql_correct2 = 'SELECT 99 FROM hundred'
+    sql_correct = [sql_correct1, sql_correct2]
+
+    assert str(sql_adjusted) == str(sql_correct)
