@@ -1,7 +1,8 @@
 import os
 import re
 
-from readsql.parse_args import validate, parse_args
+from readsql.parse_args import parse_args
+from readsql.parse_args import validate
 
 DIR = os.path.dirname(__file__)
 
@@ -35,7 +36,9 @@ def read_file(file_name, inplace=True):
 
 def read_python_file(file_name, variables=None, inplace=True):
     variables = variables if variables else ['query']
-    variables_regex = f"(?:{'|'.join(variables)})" if len(variables) > 1 else variables[0]
+    variables_regex = (
+        f"(?:{'|'.join(variables)})" if len(variables) > 1 else variables[0]
+    )
 
     with open(file_name, 'r') as inp:
         lines = inp.read()
@@ -44,7 +47,9 @@ def read_python_file(file_name, variables=None, inplace=True):
         regex = [
             m
             for m in re.finditer(
-                r'(?:\s*' + variables_regex + r'\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
+                r'(?:\s*'
+                + variables_regex
+                + r'\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
                 lines,
             )
         ]
@@ -96,16 +101,25 @@ def read_regexes():
 
 def command_line_file(args):
     validate(args)
+    aggregate = []
 
-    if args.path.endswith('.py'):
-        lines = read_python_file(args.path, args.python_var, inplace=False)
-    else:
-        lines = read_file(args.path, inplace=False)
+    for path in args.path:
+        if path.endswith('.py'):
+            lines = read_python_file(path, args.python_var, inplace=False)
+        else:
+            lines = read_file(path, inplace=False)
 
-    print(f'{args.path} has been reformatted to:\n', lines)
+        if args.nothing:
+            print(f'{path} would be reformatted to:\n', lines)
+            aggregate.append(lines)
+        else:
+            print(f'{path} has been reformatted to:\n', lines)
 
-    with open(args.path, 'w') as out:
-        out.write(lines)
+            with open(path, 'w') as out:
+                out.write(lines)
+
+    if args.nothing:
+        return aggregate
 
 
 def command_line():
