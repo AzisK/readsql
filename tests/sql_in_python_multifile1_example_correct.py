@@ -11,7 +11,7 @@ query = """
 
 def get_query1():
     query = (
-        f"SELECT MAX(weight) FROM world WHERE ocean='Atlantic' and water in NOT null"
+        f"SELECT MAX(weight) FROM world WHERE ocean='Atlantic' AND water IS NOT NULL"
     )
     return query
 

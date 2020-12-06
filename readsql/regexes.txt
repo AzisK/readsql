@@ -4,7 +4,7 @@ WHERE__(?:\s)(where)(?:\s)__1
 AS__(?:\s)(as)(?:\s)__1
 IS__(?:\s)(is)(?:\s)__1
 NOT__(?:\s)(not)(?:\s)__1
-NULL__(?:\s)(null)(?:\s|;|\))__1
+NULL__(?:\s)(null)(?:\s|;|\)|$)__1
 DISTINCT__(?:\s)(distinct)(?:\s)__1
 GROUP__(?:\s)(group)(?:\s)__1
 BY__(?:\s)(by)(?:\s)__1

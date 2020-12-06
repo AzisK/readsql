@@ -49,7 +49,7 @@ def read_python_file(file_name, variables=None, inplace=True):
             for m in re.finditer(
                 r'(?:\s*'
                 + variables_regex
-                + r'\s*=\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
+                + r'\s*=\s*\(?\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
                 lines,
             )
         ]
