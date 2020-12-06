@@ -40,6 +40,16 @@ def get_query():
     return sql
 ```
 
+# Add a pre-commit hook
+How to add a [pre-commit](https://pre-commit.com/) hook of readsql?
+```yaml
+repos:
+-   repo: https://github.com/AzisK/readsql
+    rev: 0.0.3-alpha
+    hooks:
+    -   id: readsql
+```
+
 # Development
 Having the repo cloned
 
