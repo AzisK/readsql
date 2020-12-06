@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Convert SQL to most human readable format"
 authors = ["Azis <azuolas.krusna@yahoo.com>"]
 maintainers = ["Azis <azuolas.krusna@yahoo.com>"]
+exclude = ["tests"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/AzisK/readsql/"
@@ -25,4 +26,3 @@ readsql = "readsql.__main__:command_line"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
