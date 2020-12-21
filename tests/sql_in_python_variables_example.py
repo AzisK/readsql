@@ -6,7 +6,9 @@ def get_sql():
 
 def get_query_template():
     limit = 6
-    query_template = f"SELEct speed from world where animal='dolphin' group by family limit {limit}"
+    query_template = (
+        f"SELEct speed from world where animal='dolphin' group by family limit {limit}"
+    )
     return query_template
 
 
