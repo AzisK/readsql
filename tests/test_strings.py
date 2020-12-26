@@ -16,7 +16,7 @@ def test_double_select():
         SELECT * FROM (SELECT * FROM languages) AS t
          WHERE gold IS NOT NULL;
     '''
-    sql == sql_correct
+    assert sql == sql_correct
 
 
 @timing
