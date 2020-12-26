@@ -1,5 +1,6 @@
 import os
 import re
+import functools
 
 from readsql.parse_args import parse_args
 from readsql.parse_args import validate
@@ -45,32 +46,28 @@ def read_python_file(file_name, variables=None, inplace=True):
 
     with open(file_name, 'r') as inp:
         lines = inp.read()
-        subs = []
 
-        regex = [
-            m
-            for m in re.finditer(
-                r'(?:\s*'
-                + variables_regex
-                + r'\s*=\s*\(?\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
-                lines,
-            )
-        ]
-        if regex:
-            subs = read_regexes()
-        for g in regex:
-            query = lines[g.start(1) : g.end(1)]
+    regex = [
+        m
+        for m in re.finditer(
+            r'(?:\s*'
+            + variables_regex
+            + r'\s*=\s*\(?\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
+            lines,
+        )
+    ]
 
-            for sub in subs:
-                query = replace(query, sub)
+    for g in regex:
+        query = lines[g.start(1) : g.end(1)]
 
-            lines = replace_part_of_string(lines, query, g.start(1))
+        query = read(query)
 
-        if not inplace:
-            return lines
+        lines = replace_part_of_string(lines, query, g.start(1))
 
-        with open(file_name, 'w') as out:
-            out.write(lines)
+    if not inplace:
+        return lines
+
+    write_file(file_name, lines)
 
 
 def read(string):
@@ -80,6 +77,7 @@ def read(string):
     return string
 
 
+@functools.lru_cache(maxsize=1)
 def read_regexes():
     file_name = f'{DIR}/regexes.txt'
 
