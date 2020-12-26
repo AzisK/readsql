@@ -29,13 +29,12 @@ def read_file(file_name, inplace=True):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
-        for sub in read_regexes():
-            lines = replace(lines, sub)
+    lines = read(lines)
 
-        if not inplace:
-            return lines
+    if not inplace:
+        return lines
 
-        write_file(file_name, lines)
+    write_file(file_name, lines)
 
 
 def read_python_file(file_name, variables=None, inplace=True):
@@ -110,8 +109,11 @@ def command_line_file(args):
     for path in args.path:
         if path.endswith('.py'):
             lines = read_python_file(path, args.python_var, inplace=False)
-        else:
+        elif path.endswith('.sql'):
             lines = read_file(path, inplace=False)
+        else:
+            print('No SQL or Python files were provided')
+            return
 
         if args.nothing:
             print(f'{path} would be reformatted to:\n', lines)
@@ -119,8 +121,7 @@ def command_line_file(args):
         else:
             print(f'{path} has been reformatted to:\n', lines)
 
-            with open(path, 'w') as out:
-                out.write(lines)
+            write_file(path, lines)
 
     if args.nothing:
         return aggregate
