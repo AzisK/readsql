@@ -26,9 +26,9 @@ def write_file(file_name, lines):
         out.write(lines)
 
 
-def read_file(file_name, args):
+def read_file(file_name, variables):
     if file_name.endswith('.py'):
-        return read_python_file(file_name, args.python_var)
+        return read_python_file(file_name, variables)
     elif file_name.endswith('.sql'):
         return read_sql_file(file_name)
     else:
@@ -100,24 +100,53 @@ def read_regexes():
     return rules
 
 
-def command_line_file(args):
-    validate(args)
-    aggregate = []
+def get_message(path, replaces):
+    if replaces:
+        return f'{path} would be reformatted to:\n'
+    else:
+        return f'{path} has been reformatted to:\n'
 
-    for path in args.path:
-        lines = read_file(path, args)
+
+def format_files(files, variables, replaces=True):
+    lines_list = []
+
+    for path in files:
+        lines = read_file(path, variables)
         if not lines:
             continue
 
-        if args.nothing:
-            print(f'{path} would be reformatted to:\n', lines)
-            aggregate.append(lines)
-        else:
-            print(f'{path} has been reformatted to:\n', lines)
+        if replaces:
             write_file(path, lines)
+        else:
+            lines_list.append(lines)
 
-    if args.nothing:
-        return aggregate
+        message = get_message(path, replaces)
+        print(message, lines)
+
+    return lines_list
+
+
+def read_all_files_into(paths, files_list):
+    for path in paths:
+        if path.startswith('.'):
+            continue
+        if os.path.isdir(path):
+            dir_files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+            read_all_files_into(dir_files, files_list)
+        elif os.path.isfile(path):
+            files_list.append(path)
+
+
+def get_all_files(paths):
+    files_list = []
+    read_all_files_into(paths, files_list)
+    return files_list
+
+
+def command_line_file(args):
+    validate(args)
+    files = get_all_files(args.path)
+    return format_files(files, args.python_var, not args.nothing)
 
 
 def command_line():

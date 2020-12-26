@@ -28,6 +28,6 @@ def parse_args():
 def validate(args):
     paths = args.path
     for path in paths:
-        if not os.path.isfile(path):
-            print('The file path specified does not exist')
+        if not os.path.isfile(path) and not os.path.isdir(path):
+            print('The specified path does not exist')
             sys.exit()
