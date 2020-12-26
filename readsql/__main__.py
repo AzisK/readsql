@@ -102,9 +102,8 @@ def read_regexes():
 
 def get_message(path, replaces):
     if replaces:
-        return f'{path} would be reformatted to:\n'
-    else:
         return f'{path} has been reformatted to:\n'
+    return f'{path} would be reformatted to:\n'
 
 
 def format_files(files, variables, replaces=True):
@@ -131,7 +130,7 @@ def read_all_files_into(paths, files_list):
         if path.startswith('.'):
             continue
         if os.path.isdir(path):
-            dir_files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+            dir_files = [os.path.join(path, file) for file in os.listdir(path)]
             read_all_files_into(dir_files, files_list)
         elif os.path.isfile(path):
             files_list.append(path)
@@ -144,8 +143,9 @@ def get_all_files(paths):
 
 
 def command_line_file(args):
-    validate(args)
-    files = get_all_files(args.path)
+    paths = args.path
+    validate(paths)
+    files = get_all_files(paths)
     return format_files(files, args.python_var, not args.nothing)
 
 

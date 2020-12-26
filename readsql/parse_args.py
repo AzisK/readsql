@@ -25,8 +25,7 @@ def parse_args():
     return args
 
 
-def validate(args):
-    paths = args.path
+def validate(paths):
     for path in paths:
         if not os.path.isfile(path) and not os.path.isdir(path):
             print('The specified path does not exist')
