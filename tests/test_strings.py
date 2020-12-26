@@ -6,7 +6,7 @@ from tests.timing import timing
 
 @timing
 def test_double_select():
-    sql = rsql.read(
+    sql = rsql.read_replace(
         '''
         select * from (select * FROM languages) as t
          where gold is not null;
@@ -21,7 +21,7 @@ def test_double_select():
 
 @timing
 def test_select_from_groub_by_where():
-    sql = rsql.read(
+    sql = rsql.read_replace(
         '''
         select max(height), avg(mass), min(age)  from jungle group by forest where animal=elephant;
     '''
@@ -34,7 +34,7 @@ def test_select_from_groub_by_where():
 
 @timing
 def test_is_not_null():
-    sql = rsql.read(
+    sql = rsql.read_replace(
         '''
         selECT 1,2,3
         where bounty is null
@@ -49,7 +49,7 @@ def test_is_not_null():
 
 @timing
 def test_distinct():
-    sql = rsql.read(
+    sql = rsql.read_replace(
         '''
         select distinct stars
         from universe
@@ -64,7 +64,7 @@ def test_distinct():
 
 @timing
 def test_create_table_if_not_exists():
-    sql = rsql.read(
+    sql = rsql.read_replace(
         '''
          Create table if not exists `tblsample` (
             `id` VARCHAR(100) NOT NULL auto_increment,
@@ -92,7 +92,7 @@ def test_command_line_string():
         string=True,
     )
 
-    sql_adjusted = rsql.read(args.path[0])
+    sql_adjusted = rsql.read_replace(args.path[0])
 
     sql_correct = 'SELECT sushi FROM tokyo'
 
@@ -115,7 +115,7 @@ def test_command_line_strings():
         string=True,
     )
 
-    sql_adjusted = [rsql.read(s) for s in args.path]
+    sql_adjusted = [rsql.read_replace(s) for s in args.path]
 
     sql_correct1 = '''
         SELECT * FROM (SELECT * FROM languages) AS t

@@ -26,19 +26,24 @@ def write_file(file_name, lines):
         out.write(lines)
 
 
-def read_file(file_name, inplace=True):
+def read_file(file_name, args):
+    if file_name.endswith('.py'):
+        return read_python_file(file_name, args.python_var)
+    elif file_name.endswith('.sql'):
+        return read_sql_file(file_name)
+    else:
+        print(f'{file_name} is not an SQL or Python file')
+        return
+
+
+def read_sql_file(file_name):
     with open(file_name, 'r') as inp:
         lines = inp.read()
 
-    lines = read(lines)
-
-    if not inplace:
-        return lines
-
-    write_file(file_name, lines)
+    return read_replace(lines)
 
 
-def read_python_file(file_name, variables=None, inplace=True):
+def read_python_file(file_name, variables=None):
     variables = variables if variables else ['query']
     variables_regex = (
         f"(?:{'|'.join(variables)})" if len(variables) > 1 else variables[0]
@@ -59,18 +64,13 @@ def read_python_file(file_name, variables=None, inplace=True):
 
     for g in regex:
         query = lines[g.start(1) : g.end(1)]
-
-        query = read(query)
-
+        query = read_replace(query)
         lines = replace_part_of_string(lines, query, g.start(1))
 
-    if not inplace:
-        return lines
-
-    write_file(file_name, lines)
+    return lines
 
 
-def read(string):
+def read_replace(string):
     for sub in read_regexes():
         string = replace(string, sub)
 
@@ -105,20 +105,15 @@ def command_line_file(args):
     aggregate = []
 
     for path in args.path:
-        if path.endswith('.py'):
-            lines = read_python_file(path, args.python_var, inplace=False)
-        elif path.endswith('.sql'):
-            lines = read_file(path, inplace=False)
-        else:
-            print('No SQL or Python files were provided')
-            return
+        lines = read_file(path, args)
+        if not lines:
+            continue
 
         if args.nothing:
             print(f'{path} would be reformatted to:\n', lines)
             aggregate.append(lines)
         else:
             print(f'{path} has been reformatted to:\n', lines)
-
             write_file(path, lines)
 
     if args.nothing:
@@ -128,7 +123,7 @@ def command_line_file(args):
 def command_line():
     args = parse_args()
     if args.string:
-        print('\n'.join([read(p) + '\n' for p in args.path]))
+        print('\n'.join([read_replace(p) + '\n' for p in args.path]))
     else:
         command_line_file(args)
 

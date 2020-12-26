@@ -6,8 +6,13 @@ DIR = os.path.dirname(__file__)
 
 
 def check():
-    rsql.read_file(file_name=DIR + '/sql_example.sql')
-    rsql.read_python_file(file_name=DIR + '/sql_in_python_example.py')
+    n1 = DIR + '/sql_example.sql'
+    r1 = rsql.read_file(file_name=n1)
+    rsql.write_file(file_name=n1, lines=r1)
+
+    n2 = DIR + '/sql_in_python_example.py'
+    r2 = rsql.read_file(file_name=n2)
+    rsql.write_file(file_name=n2, lines=r2)
 
 
 if __name__ == '__main__':
