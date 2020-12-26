@@ -20,6 +20,11 @@ def replace_part_of_string(string, part, start):
     return string
 
 
+def write_file(file_name, lines):
+    with open(file_name, 'w') as out:
+        out.write(lines)
+
+
 def read_file(file_name, inplace=True):
     with open(file_name, 'r') as inp:
         lines = inp.read()
@@ -30,8 +35,7 @@ def read_file(file_name, inplace=True):
         if not inplace:
             return lines
 
-        with open(file_name, 'w') as out:
-            out.write(lines)
+        write_file(file_name, lines)
 
 
 def read_python_file(file_name, variables=None, inplace=True):
