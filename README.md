@@ -38,7 +38,7 @@ readsql <SQL_STRING1> <SQL_STRING2> -s
 readsql <FILE_OR_FOLDER_PATH1> <FILE_OR_FOLDER_PATH2>
 ```
 
-We can look for different strings in Python files with a `-py` arguments
+We can look for different strings in Python files with `-py` arguments
 ```bash
 readsql <FILE_OR_FOLDER_PATH> -py <PY_VAR1> <PY_VAR2>
 ```
