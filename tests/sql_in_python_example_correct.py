@@ -3,8 +3,8 @@ query = """
 """
 
 query = """
-    SELECT * 
-    FROM games 
+    SELECT *
+    FROM games
     WHERE test=0
 """
 

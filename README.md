@@ -25,7 +25,7 @@ SELECT sushi, AVG(price) FROM tokyo WHERE ocean = 'pacific' GROUP BY sushi
 2. Format an SQL file or folder
     - as in a folder, it will look for files ending with .sql or .py
     - `readsql <FILE_OR_FOLDER_PATH>`
-    
+
 It supports multiple strings and files or folders as well
 
 1.
@@ -42,7 +42,7 @@ We can look for different strings in Python files with a `-py` arguments
 ```bash
 readsql <FILE_OR_FOLDER_PATH> -py <PY_VAR1> <PY_VAR2>
 ```
-    
+
 # Usage examples
 
 1. `readsql 'select sushi from tokyo' -s` command returns

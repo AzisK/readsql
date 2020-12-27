@@ -30,7 +30,9 @@ def test_read_python_file_wrap():
 def test_read_python_file_variable_wrap():
     @timing
     def test_read_python_file(variable):
-        return rsql.read_python_file(file_name=DIR + '/sql_in_python_variable_example.py', variables=variable)
+        return rsql.read_python_file(
+            file_name=DIR + '/sql_in_python_variable_example.py', variables=variable
+        )
 
     example = test_read_python_file(variable=['sql'])
     with open(DIR + '/sql_in_python_variable_example_correct.py', 'r') as inp:
@@ -40,7 +42,9 @@ def test_read_python_file_variable_wrap():
 def test_read_python_file_variables_wrap():
     @timing
     def test_read_python_file(variable):
-        return rsql.read_python_file(file_name=DIR + '/sql_in_python_variables_example.py', variables=variable)
+        return rsql.read_python_file(
+            file_name=DIR + '/sql_in_python_variables_example.py', variables=variable
+        )
 
     example = test_read_python_file(variable=['sql', 'query_template', 'query'])
     with open(DIR + '/sql_in_python_variables_example_correct.py', 'r') as inp:

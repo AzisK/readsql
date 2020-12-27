@@ -1,6 +1,6 @@
+import functools
 import os
 import re
-import functools
 
 from readsql.parse_args import parse_args
 from readsql.parse_args import validate

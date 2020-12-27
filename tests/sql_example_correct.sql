@@ -1,6 +1,6 @@
 SELECT * FROM languages;
 
-SELECT * FROM games 
+SELECT * FROM games
 	WHERE test=0;
 
 SELECT * FROM (SELECT * FROM languages) t;
