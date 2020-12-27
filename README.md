@@ -61,15 +61,15 @@ SELECT MAX(height), AVG(mass), MIN(age) FROM jungle GROUP BY forest WHERE animal
 ```python
 def get_query():
     limit = 6
-    sql = f"SELEct speed from world where animal='dolphin' limit {limit}"
-    return sql
+    query = f"SELEct speed from world where animal='dolphin' limit {limit}"
+    return query
 ```
 replaces the file with this code
 ```python
 def get_query():
     limit = 6
-    sql = f"SELECT speed FROM world WHERE animal='dolphin' LIMIT {limit}"
-    return sql
+    query = f"SELECT speed FROM world WHERE animal='dolphin' LIMIT {limit}"
+    return query
 ```
 
 2.c. `readsql sql_in_python_variable_example.py -py sql` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
