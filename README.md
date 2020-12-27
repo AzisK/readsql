@@ -1,6 +1,6 @@
 # readsql
 
-Convert SQL to most human readable format. For the time being it upper cases SQL keywords, it might prettify of even suggest improvements of SQL code in the future. It converts SQL code and even SQL-strings in programming languages (only Python at the moment).
+Convert SQL to most human readable format. For the time being it upper cases SQL keywords, it might prettify or even suggest improvements of SQL code in the future. It converts SQL code and even SQL-strings in programming languages (only Python at the moment).
 
 So if we write
 
