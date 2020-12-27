@@ -57,7 +57,7 @@ replaces the file with this code
 SELECT MAX(height), AVG(mass), MIN(age) FROM jungle GROUP BY forest WHERE animal=elephant;
 ```
 
-2.c. `readsql sql_in_python_variable_example.py` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
+2.b. `readsql sql_in_python_variable_example.py` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
 ```python
 def get_query():
     limit = 6
