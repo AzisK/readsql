@@ -94,7 +94,7 @@ How to add a [pre-commit](https://pre-commit.com/) hook of readsql?
 ```yaml
 repos:
 -   repo: https://github.com/AzisK/readsql
-    rev: 0.0.5-alpha # Replace by any tag/version: https://github.com/azisk/readsql/tags
+    rev: 0.1.1 # Replace by any tag/version: https://github.com/azisk/readsql/tags
     hooks:
     -   id: readsql
 ```

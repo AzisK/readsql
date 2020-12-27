@@ -11,7 +11,7 @@ repos:
     -   id: black
         args: [-S]
 #-   repo: https://github.com/AzisK/readsql
-#    rev: 0.0.3-alpha
+#    rev: 0.1.1
 #    hooks:
 #    -   id: readsql
 -   repo: https://github.com/sqlalchemyorg/zimports/
