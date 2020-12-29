@@ -23,3 +23,11 @@ def get_query():
 def return_5():
     query = 'select 5'
     return query
+
+
+def insert():
+    query = '''
+    insert into table_name (column1, column2, column3)
+    values (value1, value2, value3);
+    '''
+    return query

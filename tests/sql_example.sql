@@ -28,3 +28,6 @@ SELECT sun from univere group by galaxy
 )
 
 select max(height), avg(mass), min(age)  from jungle group by forest where animal=elephant;
+
+insert into table_name (column1, column2, column3)
+values (value1, value2, value3);
