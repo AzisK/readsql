@@ -89,6 +89,8 @@ def get_query():
 
 2.d. `readsql tests -n` command outputs all of the formated SQL code in `tests` folder, files are not replaced by the formatted version (`-n` argument stand for not-replace)
 
+More examples can be found in `/tests` folder
+
 # Add a pre-commit hook
 How to add a [pre-commit](https://pre-commit.com/) hook of readsql?
 ```yaml
