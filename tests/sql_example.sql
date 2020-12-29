@@ -31,3 +31,7 @@ select max(height), avg(mass), min(age)  from jungle group by forest where anima
 
 insert into table_name (column1, column2, column3)
 values (value1, value2, value3);
+
+select Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+from Orders
+inner join Customers on Orders.CustomerID=Customers.CustomerID;

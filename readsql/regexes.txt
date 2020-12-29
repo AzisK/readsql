@@ -16,6 +16,9 @@ LIMIT__(?:\s)(limit)(?:\s)__1
 AND__(?:\s)(and)(?:\s)__1
 INSERT INTO__(?:\s)(insert\s+into)(?:\s)__1
 VALUES__(?:\s)(values)(?:\s)__1
+INNER__(?:\s)(inner)(?:\s)__1
+JOIN__(?:\s)(join)(?:\s)__1
+ON__(?:\s)(on)(?:\s)__1
 
 # Aggregations
 SUM__(?:\s)(sum)(?:\()__1

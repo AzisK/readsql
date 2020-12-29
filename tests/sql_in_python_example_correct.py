@@ -31,3 +31,12 @@ def insert():
     VALUES (value1, value2, value3);
     '''
     return query
+
+
+def join():
+    query = '''
+    SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+    FROM Orders
+    INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+    '''
+    return query
