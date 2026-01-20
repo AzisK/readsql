@@ -1,161 +1,139 @@
+import argparse
 import functools
 import os
 import re
-
-from readsql.parse_args import parse_args
-from readsql.parse_args import validate
+import sys
 
 DIR = os.path.dirname(__file__)
 
 
-def replace(lines, substitution):
-    regex = [m for m in re.finditer(substitution['regex'], lines, re.IGNORECASE)]
-    for g in regex:
-        start = g.start(substitution['group'])
-        lines = replace_part_of_string(lines, substitution['substitute'], start)
-    return lines
-
-
-def replace_part_of_string(string, part, start):
-    string = string[:start] + part + string[start + len(part) :]
-    return string
-
-
-def write_file(file_name, lines):
-    with open(file_name, 'w') as out:
-        out.write(lines)
-
-
-def read_file(file_name, variables):
-    if file_name.endswith('.py'):
-        return read_python_file(file_name, variables)
-    elif file_name.endswith('.sql'):
-        return read_sql_file(file_name)
+def main():
+    args = parse_args()
+    if args.string:
+        print('\n'.join(read_replace(p) for p in args.path))
     else:
-        print(f'{file_name} is not an SQL or Python file')
+        run_on_files(args.path, args.python_var, dry_run=args.nothing)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        prog='readsql', description='Convert SQL to most human readable format'
+    )
+    parser.add_argument('path', nargs='+', help='Path to the file to be converted')
+    parser.add_argument('-s', '--string', action='store_true', help='Read a string')
+    parser.add_argument(
+        '-n', '--nothing', action='store_true', help='Dry run (do not modify files)'
+    )
+    parser.add_argument(
+        '-py',
+        '--python_var',
+        nargs='+',
+        default=['query'],
+        help='Variables to search in Python files (default: query)',
+    )
+    return parser.parse_args()
+
+
+def run_on_files(paths, variables, dry_run=False):
+    results = []
+    for path in collect_files(paths):
+        lines = read_file(path, variables)
+        if lines is None:
+            continue
+        if not dry_run:
+            with open(path, 'w') as f:
+                f.write(lines)
+        else:
+            results.append(lines)
+        action = 'would be reformatted' if dry_run else 'reformatted'
+        print(f'{path} {action}:\n{lines}')
+    return results if dry_run else None
+
+
+def collect_files(paths):
+    for path in paths:
+        if os.path.basename(path).startswith('.'):
+            continue
+        if os.path.isdir(path):
+            yield from collect_files(
+                os.path.join(path, f) for f in os.listdir(path)
+            )
+        elif os.path.isfile(path):
+            yield path
+        else:
+            print(f'Path does not exist: {path}', file=sys.stderr)
+            sys.exit(1)
+
+
+def read_file(path, variables):
+    if path.endswith('.py'):
+        return read_python_file(path, variables)
+    elif path.endswith('.sql'):
+        return read_sql_file(path)
+    else:
+        print(f'{path} is not an SQL or Python file')
         return
 
 
-def read_sql_file(file_name):
-    with open(file_name, 'r') as inp:
-        lines = inp.read()
-
-    return read_replace(lines)
+def read_sql_file(path):
+    with open(path) as f:
+        return read_replace(f.read())
 
 
-def read_python_file(file_name, variables=None):
-    variables = variables if variables else ['query']
-    variables_regex = (
-        f"(?:{'|'.join(variables)})" if len(variables) > 1 else variables[0]
+def read_python_file(path, variables=None):
+    variables = variables or ['query']
+    pattern = '|'.join(re.escape(v) for v in variables)
+
+    with open(path) as f:
+        content = f.read()
+
+    regex = re.compile(
+        r'(?:\s*(?:' + pattern + r')\s*=\s*\(?\s*f?)(?:"{1,3}|\'{1,3})([^"]*)'
+        r'(?:"|\')'
     )
 
-    with open(file_name, 'r') as inp:
-        lines = inp.read()
+    for m in regex.finditer(content):
+        query = content[m.start(1) : m.end(1)]
+        replaced = read_replace(query)
+        content = content[: m.start(1)] + replaced + content[m.end(1) :]
 
-    regex = [
-        m
-        for m in re.finditer(
-            r'(?:\s*'
-            + variables_regex
-            + r'\s*=\s*\(?\s*f?)(?:"{1,3}|\'{1,3})([^"]*)(:?"|\')',
-            lines,
-        )
-    ]
-
-    for g in regex:
-        query = lines[g.start(1) : g.end(1)]
-        query = read_replace(query)
-        lines = replace_part_of_string(lines, query, g.start(1))
-
-    return lines
+    return content
 
 
 def read_replace(string):
-    for sub in read_regexes():
-        string = replace(string, sub)
-
+    for sub in get_regexes():
+        string = apply_rule(string, sub)
     return string
 
 
+def apply_rule(text, rule):
+    def replacer(m):
+        prefix = text[m.start() : m.start(rule['group'])]
+        suffix = text[m.end(rule['group']) : m.end()]
+        return prefix + rule['substitute'] + suffix
+
+    return re.sub(rule['regex'], replacer, text, flags=re.IGNORECASE)
+
+
 @functools.lru_cache(maxsize=1)
-def read_regexes():
-    file_name = f'{DIR}/regexes.txt'
-
+def get_regexes():
     rules = []
-
-    with open(file_name, 'r') as inp:
-        for line in inp:
+    with open(f'{DIR}/regexes.txt') as f:
+        for line in f:
             if line.startswith('#') or not line.strip():
                 continue
-
-            regex_line = line.split('__')
-            regex_dict = {
-                'substitute': regex_line[0],
-                'regex': regex_line[1],
-                'group': int(regex_line[2]),
-            }
-
-            rules.append(regex_dict)
-
+            parts = line.strip().split('__')
+            rules.append({
+                'substitute': parts[0],
+                'regex': parts[1],
+                'group': int(parts[2]),
+            })
     return rules
 
 
-def get_message(path, replaces):
-    if replaces:
-        return f'{path} has been reformatted to:\n'
-    return f'{path} would be reformatted to:\n'
-
-
-def format_files(files, variables, replaces=True):
-    lines_list = []
-
-    for path in files:
-        lines = read_file(path, variables)
-        if not lines:
-            continue
-
-        if replaces:
-            write_file(path, lines)
-        else:
-            lines_list.append(lines)
-
-        message = get_message(path, replaces)
-        print(message, lines)
-
-    return lines_list
-
-
-def read_all_files_into(paths, files_list):
-    for path in paths:
-        if path.startswith('.'):
-            continue
-        if os.path.isdir(path):
-            dir_files = [os.path.join(path, file) for file in os.listdir(path)]
-            read_all_files_into(dir_files, files_list)
-        elif os.path.isfile(path):
-            files_list.append(path)
-
-
-def get_all_files(paths):
-    files_list = []
-    read_all_files_into(paths, files_list)
-    return files_list
-
-
 def command_line_file(args):
-    paths = args.path
-    validate(paths)
-    files = get_all_files(paths)
-    return format_files(files, args.python_var, not args.nothing)
-
-
-def command_line():
-    args = parse_args()
-    if args.string:
-        print('\n'.join([read_replace(p) + '\n' for p in args.path]))
-    else:
-        command_line_file(args)
+    return run_on_files(args.path, args.python_var, dry_run=args.nothing)
 
 
 if __name__ == '__main__':
-    command_line()
+    main()

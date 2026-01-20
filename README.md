@@ -33,7 +33,7 @@ It supports multiple strings and files or folders as well
 readsql <SQL_STRING1> <SQL_STRING2> -s
 ```
 
-2. In Python files it looks for `query` strings and formats them
+2. In Python files it looks for variable `query` strings and formats them
 ```bash
 readsql <FILE_OR_FOLDER_PATH1> <FILE_OR_FOLDER_PATH2>
 ```
@@ -57,7 +57,7 @@ replaces the file with this code
 SELECT MAX(height), AVG(mass), MIN(age) FROM jungle GROUP BY forest WHERE animal=elephant;
 ```
 
-2.b. `readsql sql_in_python_variable_example.py` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
+2. b. `readsql sql_in_python_variable_example.py` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
 ```python
 def get_query():
     limit = 6
@@ -72,7 +72,7 @@ def get_query():
     return query
 ```
 
-2.c. `readsql sql_in_python_variable_example.py -py sql` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
+2. c. `readsql sql_in_python_variable_example.py -py sql` command, while `sql_in_python_variable_example.py` is a Python file with code as below,
 ```python
 def get_query():
     limit = 6
@@ -87,7 +87,7 @@ def get_query():
     return sql
 ```
 
-2.d. `readsql tests -n` command outputs all of the formated SQL code in `tests` folder, files are not replaced by the formatted version (`-n` argument stand for not-replace)
+2. d. `readsql tests -n` command outputs all of the formated SQL code in `tests` folder, files are not replaced by the formatted version (`-n` argument stand for not-replace)
 
 More examples can be found in `/tests` folder
 

@@ -8,12 +8,14 @@ DIR = os.path.dirname(__file__)
 
 def check1():
     n1 = DIR + '/sql_example.sql'
-    r1 = rsql.read_file(file_name=n1)
-    rsql.write_file(file_name=n1, lines=r1)
+    r1 = rsql.read_sql_file(n1)
+    with open(n1, 'w') as f:
+        f.write(r1)
 
     n2 = DIR + '/sql_in_python_example.py'
-    r2 = rsql.read_file(file_name=n2)
-    rsql.write_file(file_name=n2, lines=r2)
+    r2 = rsql.read_python_file(n2)
+    with open(n2, 'w') as f:
+        f.write(r2)
 
 
 def check2():
