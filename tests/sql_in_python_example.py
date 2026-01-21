@@ -2,10 +2,15 @@ query = """
     select * from languages;
 """
 
-query = """
+query = '''
     select *
     from games
     where test=0
+'''
+
+query = """
+    select * 
+    from languages;
 """
 
 
@@ -20,23 +25,38 @@ def get_query2():
     return query
 
 
+def get_query3():
+    limit = 6
+    query = f"""
+    SELEct speed from world where animal='dolphin' LIMIT {limit}
+    """
+    return query
+
+
+def get_query4():
+    query = """
+    SELEct speed from world where animal='dolphin'
+    """
+    return query
+
+
 def return_5():
     query = 'select 5'
     return query
 
 
 def insert():
-    query = """
+    query = '''
     insert into table_name (column1, column2, column3)
     values (value1, value2, value3);
-    """
+    '''
     return query
 
 
 def join():
-    query = """
+    query = '''
     select Orders.OrderID, Customers.CustomerName, Orders.OrderDate
     from Orders
     inner join Customers on Orders.CustomerID=Customers.CustomerID;
-    """
+    '''
     return query

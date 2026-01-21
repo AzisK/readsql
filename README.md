@@ -16,7 +16,11 @@ SELECT sushi, AVG(price) FROM tokyo WHERE ocean = 'pacific' GROUP BY sushi
 
 # Installation
 
-`pip install readsql`
+```bash
+pip install readsql
+```
+
+Requires Python 3.8+.
 
 # Usage
 
@@ -96,20 +100,26 @@ How to add a [pre-commit](https://pre-commit.com/) hook of readsql?
 ```yaml
 repos:
 -   repo: https://github.com/AzisK/readsql
-    rev: 0.1.1 # Replace by any tag/version: https://github.com/azisk/readsql/tags
+    rev: v1.0.0  # Replace by any tag/version: https://github.com/azisk/readsql/tags
     hooks:
     -   id: readsql
 ```
 
 # Development
-Having the repo cloned dig into
 
-- `python -m readsql "select sushi from tokyo" -s` takes the `"select sushi from tokyo"` string as input and outputs it formatted
-- `python -m readsql tests/sql_example.sql` converts example SQL code to easier readable format
-- `python -m readsql tests/sql_in_python_example.py` converts example SQL code in Python (it looks for variables `query`)
-- we can change the SQL variable with `-py` option `python -m readsql tests/sql_in_python_variable_example.py -py sql`
-- `python -m readsql tests` formats all Python and SQL files in `tests` folder
+Clone the repo and use [uv](https://docs.astral.sh/uv/) for development:
+
+```bash
+uv sync --all-extras                                    # Install dependencies
+uv run readsql "select sushi from tokyo" -s             # Format a string
+uv run readsql tests/sql_example.sql                    # Format SQL file
+uv run readsql tests/sql_in_python_example.py           # Format SQL in Python
+uv run readsql tests/sql_in_python_variable_example.py -py sql  # Custom variable
+uv run readsql tests                                    # Format all files in folder
+```
 
 # Testing
 
-Have `pytest` installed and run `pytest -v` (-v stands for verbose)
+```bash
+uv run pytest -v
+```

@@ -32,6 +32,8 @@ packages = ["readsql"]
 
 [tool.ruff]
 line-length = 88
+# Exclude test fixtures from formatting to preserve their exact structure
+extend-exclude = ["tests/*_example*.py"]
 
 [tool.ruff.lint.per-file-ignores]
 # Test fixtures intentionally use f-strings without placeholders to test SQL formatting
