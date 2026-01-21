@@ -55,9 +55,7 @@ def collect_files(paths):
         if os.path.basename(path).startswith('.'):
             continue
         if os.path.isdir(path):
-            yield from collect_files(
-                os.path.join(path, f) for f in os.listdir(path)
-            )
+            yield from collect_files(os.path.join(path, f) for f in os.listdir(path))
         elif os.path.isfile(path):
             yield path
         else:
@@ -87,15 +85,22 @@ def read_python_file(path, variables=None):
     with open(path) as f:
         content = f.read()
 
+    # Match a variable assignment (e.g. query = ...), optional f-string,
+    # and the string content within matching quotes (single or triple, ' or ").
     regex = re.compile(
-        r'(?:\s*(?:' + pattern + r')\s*=\s*\(?\s*f?)(?:"{1,3}|\'{1,3})([^"]*)'
-        r'(?:"|\')'
+        r'(?:\s*(?:'
+        + pattern
+        + r')\s*=\s*\(?\s*f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*?)(?P=quote)',
+        flags=re.DOTALL,
     )
 
-    for m in regex.finditer(content):
-        query = content[m.start(1) : m.end(1)]
+    matches = list(regex.finditer(content))
+    # Process matches in reverse order so that replacing content (which might change length)
+    # does not invalidate the indices of earlier matches.
+    for m in reversed(matches):
+        query = m.group('content')
         replaced = read_replace(query)
-        content = content[: m.start(1)] + replaced + content[m.end(1) :]
+        content = content[: m.start('content')] + replaced + content[m.end('content') :]
 
     return content
 
@@ -123,11 +128,13 @@ def get_regexes():
             if line.startswith('#') or not line.strip():
                 continue
             parts = line.strip().split('__')
-            rules.append({
-                'substitute': parts[0],
-                'regex': parts[1],
-                'group': int(parts[2]),
-            })
+            rules.append(
+                {
+                    'substitute': parts[0],
+                    'regex': parts[1],
+                    'group': int(parts[2]),
+                }
+            )
     return rules
 
 

@@ -24,9 +24,13 @@ All notable changes to this project will be documented in this file.
 - **Bumped version** from 0.1.1 to 1.0.0
 
 - **Updated minimum Python version** from 3.6 to 3.8
+- **Consolidated linting tools**: Replaced `zimports` with `ruff` for import sorting and updated CI to show diffs on failure.
 
 ### Added
 
+- GitHub Actions workflows:
+  - `ci.yml` for testing and linting
+  - `publish-pypi.yml` for publishing releases
 - `AGENTS.md` with development commands and architecture documentation
 - `CHANGELOG.md` to track changes
 
@@ -39,5 +43,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- **Fixed SQL string detection in Python files**:
+  - Regex now correctly identifies SQL strings wrapped in single quotes (`'''`) and triple double quotes (`"""`).
+  - Fixed a bug where replacing content with a different length caused index drift, corrupting the file.
 - Updated `tests/check.py` to use current API (`read_sql_file`, `read_python_file` with positional args)
 - Updated `tests/test_files.py` to use `path=` instead of `file_name=` keyword argument

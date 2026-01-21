@@ -2,21 +2,41 @@ query = """
     SELECT * FROM languages;
 """
 
-query = """
+query = '''
     SELECT *
     FROM games
     WHERE test=0
+'''
+
+query = """
+    SELECT *
+    FROM languages;
 """
 
 
-def get_query():
+def get_query1():
     query = f"SELECT MAX(weight) FROM world WHERE ocean='Atlantic'"
     return query
 
 
-def get_query():
+def get_query2():
     limit = 6
     query = f"SELECT speed FROM world WHERE animal='dolphin' LIMIT {limit}"
+    return query
+
+
+def get_query3():
+    limit = 6
+    query = f"""
+    SELECT speed FROM world WHERE animal='dolphin' LIMIT {limit}
+    """
+    return query
+
+
+def get_query4():
+    query = """
+    SELECT speed FROM world WHERE animal='dolphin'
+    """
     return query
 
 

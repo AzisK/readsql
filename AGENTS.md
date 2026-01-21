@@ -47,3 +47,7 @@ Format: `SUBSTITUTE__REGEX__GROUP` (double underscore delimited)
 Example: `SELECT__(?:^|\s|\()(select)(?:\s)__1` matches `select` keyword and replaces with `SELECT`.
 
 To add new SQL keywords, append a line following this format.
+
+### GHA workflows
+- CI is at .github/workflows/ci.yml
+- Publish to PyPI is at .github/workflows/publish-pypi.yml
