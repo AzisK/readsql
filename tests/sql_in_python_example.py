@@ -9,12 +9,12 @@ query = """
 """
 
 
-def get_query():
+def get_query1():
     query = f"SELEct max(weight) from world where ocean='Atlantic'"
     return query
 
 
-def get_query():
+def get_query2():
     limit = 6
     query = f"SELEct speed from world where animal='dolphin' limit {limit}"
     return query

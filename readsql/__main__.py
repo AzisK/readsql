@@ -55,9 +55,7 @@ def collect_files(paths):
         if os.path.basename(path).startswith('.'):
             continue
         if os.path.isdir(path):
-            yield from collect_files(
-                os.path.join(path, f) for f in os.listdir(path)
-            )
+            yield from collect_files(os.path.join(path, f) for f in os.listdir(path))
         elif os.path.isfile(path):
             yield path
         else:
@@ -123,11 +121,13 @@ def get_regexes():
             if line.startswith('#') or not line.strip():
                 continue
             parts = line.strip().split('__')
-            rules.append({
-                'substitute': parts[0],
-                'regex': parts[1],
-                'group': int(parts[2]),
-            })
+            rules.append(
+                {
+                    'substitute': parts[0],
+                    'regex': parts[1],
+                    'group': int(parts[2]),
+                }
+            )
     return rules
 
 

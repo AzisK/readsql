@@ -1,23 +1,23 @@
-func:test_read_python_file__var:(((), {'variable': ['sql']}))__took: 0.000218 sec
+func:test_read_python_file__var:(((), {'variable': ['sql']}))__took: 0.000224 sec
 
-func:test_read_file__var:(((), {}))__took: 0.001278 sec
+func:test_read_file__var:(((), {}))__took: 0.001530 sec
 
-func:test_read_python_file__var:(((), {}))__took: 0.000519 sec
+func:test_read_python_file__var:(((), {}))__took: 0.000428 sec
 
-func:test_double_select__var:(((), {}))__took: 0.000053 sec
+func:test_double_select__var:(((), {}))__took: 0.000059 sec
 
-func:test_select_from_groub_by_where__var:(((), {}))__took: 0.000057 sec
+func:test_select_from_groub_by_where__var:(((), {}))__took: 0.000054 sec
 
-func:test_is_not_null__var:(((), {}))__took: 0.000038 sec
+func:test_is_not_null__var:(((), {}))__took: 0.000044 sec
 
-func:test_distinct__var:(((), {}))__took: 0.000039 sec
+func:test_distinct__var:(((), {}))__took: 0.000045 sec
 
-func:test_create_table_if_not_exists__var:(((), {}))__took: 0.000074 sec
+func:test_create_table_if_not_exists__var:(((), {}))__took: 0.000076 sec
 
-func:test_read_python_file__var:(((), {'variable': ['sql', 'query_template', 'query']}))__took: 0.000378 sec
+func:test_read_python_file__var:(((), {'variable': ['sql', 'query_template', 'query']}))__took: 0.000302 sec
 
-func:test_read_python_multifile__var:(((), {}))__took: 0.000497 sec
+func:test_read_python_multifile__var:(((), {}))__took: 0.000499 sec
 
-func:test_command_line_string__var:(((), {}))__took: 0.000030 sec
+func:test_command_line_string__var:(((), {}))__took: 0.000033 sec
 
-func:test_command_line_strings__var:(((), {}))__took: 0.000082 sec
+func:test_command_line_strings__var:(((), {}))__took: 0.000081 sec

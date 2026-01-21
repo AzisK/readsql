@@ -9,7 +9,7 @@ def timing(f):
         ts = time()
         result = f(*args, **kw)
         te = time()
-        timing_string = f'func:{f.__name__}__var:({args, kw})__took: {te-ts:2.6f} sec'
+        timing_string = f'func:{f.__name__}__var:({args, kw})__took: {te - ts:2.6f} sec'
         print(timing_string)
 
         is_function = False
