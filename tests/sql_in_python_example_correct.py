@@ -26,17 +26,17 @@ def return_5():
 
 
 def insert():
-    query = '''
+    query = """
     INSERT INTO table_name (column1, column2, column3)
     VALUES (value1, value2, value3);
-    '''
+    """
     return query
 
 
 def join():
-    query = '''
+    query = """
     SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
     FROM Orders
     INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
-    '''
+    """
     return query
