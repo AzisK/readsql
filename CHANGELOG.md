@@ -24,9 +24,13 @@ All notable changes to this project will be documented in this file.
 - **Bumped version** from 0.1.1 to 1.0.0
 
 - **Updated minimum Python version** from 3.6 to 3.8
+- **Consolidated linting tools**: Replaced `zimports` with `ruff` for import sorting and updated CI to show diffs on failure.
 
 ### Added
 
+- GitHub Actions workflows:
+  - `ci.yml` for testing and linting
+  - `publish-pypi.yml` for publishing releases
 - `AGENTS.md` with development commands and architecture documentation
 - `CHANGELOG.md` to track changes
 
