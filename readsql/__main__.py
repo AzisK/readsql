@@ -46,15 +46,15 @@ def run_on_files(
         lines = read_file(file_path, variables)
         if lines is None:
             continue
-        
+
         if not dry_run:
             file_path.write_text(lines, encoding='utf-8')
         else:
             results.append(lines)
-            
+
         action = 'would be reformatted' if dry_run else 'reformatted'
         print(f'{file_path} {action}:\n{lines}')
-        
+
     return results if dry_run else None
 
 
@@ -63,7 +63,7 @@ def collect_files(paths: Iterable[str]) -> Generator[Path, None, None]:
         path = Path(p)
         if path.name.startswith('.'):
             continue
-            
+
         if path.is_dir():
             # Recursive search excluding hidden files/dirs
             # We implement manual recursion to easily skip hidden directories
@@ -83,7 +83,7 @@ def collect_files(paths: Iterable[str]) -> Generator[Path, None, None]:
 
 def read_file(path: Union[Path, str], variables: List[str]) -> Optional[str]:
     path_obj = Path(path) if isinstance(path, str) else path
-    
+
     if path_obj.suffix == '.py':
         return read_python_file(path_obj, variables)
     elif path_obj.suffix == '.sql':
@@ -99,11 +99,13 @@ def read_sql_file(path: Union[Path, str]) -> str:
     return read_replace(content)
 
 
-def read_python_file(path: Union[Path, str], variables: Optional[List[str]] = None) -> str:
+def read_python_file(
+    path: Union[Path, str], variables: Optional[List[str]] = None
+) -> str:
     path_obj = Path(path) if isinstance(path, str) else path
     variables = variables or ['query']
     content = path_obj.read_text(encoding='utf-8')
-    
+
     try:
         tree = ast.parse(content)
     except SyntaxError:
@@ -112,15 +114,15 @@ def read_python_file(path: Union[Path, str], variables: Optional[List[str]] = No
 
     # Find assignments to target variables
     replacements = []
-    
+
     # Pre-calculate line offests to convert (lineno, col) to absolute index
     lines = content.splitlines(keepends=True)
-    
+
     def get_offset(lineno: int, col_offset: int) -> int:
         # lineno is 1-based
         if lineno <= 0:
             return 0
-        return sum(len(line) for line in lines[:lineno-1]) + col_offset
+        return sum(len(line) for line in lines[: lineno - 1]) + col_offset
 
     for node in ast.walk(tree):
         if isinstance(node, (ast.Assign, ast.AnnAssign)):
@@ -130,63 +132,63 @@ def read_python_file(path: Union[Path, str], variables: Optional[List[str]] = No
                 targets = node.targets
             else:
                 targets = [node.target]
-                
+
             is_target = False
             for t in targets:
                 if isinstance(t, ast.Name) and t.id in variables:
                     is_target = True
                     break
-            
+
             if not is_target:
                 continue
-                
+
             # Check value (Constant string or JoinedStr/f-string)
             value_node = node.value
             if isinstance(value_node, (ast.Constant, ast.JoinedStr)):
                 # We need the segments. AST supports end_lineno/end_col_offset in 3.8+
                 if (
-                    value_node.lineno is None 
-                    or value_node.col_offset is None 
-                    or value_node.end_lineno is None 
+                    value_node.lineno is None
+                    or value_node.col_offset is None
+                    or value_node.end_lineno is None
                     or value_node.end_col_offset is None
                 ):
                     continue
-                    
+
                 start_idx = get_offset(value_node.lineno, value_node.col_offset)
                 end_idx = get_offset(value_node.end_lineno, value_node.end_col_offset)
-                
+
                 raw_segment = content[start_idx:end_idx]
-                
+
                 # Regex to extract quote and content from the raw segment
                 # This handles f-strings and normal strings, ensuring we only touch the inner content
                 # We reuse the logic but applied to the exact segment identified by AST
                 match = re.match(
-                    r'^(?P<prefix>[uUrR]?f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*)(?P=quote)$', 
-                    raw_segment, 
-                    flags=re.DOTALL
+                    r'^(?P<prefix>[uUrR]?f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*)(?P=quote)$',
+                    raw_segment,
+                    flags=re.DOTALL,
                 )
-                
+
                 if match:
                     inner_content = match.group('content')
                     formatted_content = read_replace(inner_content)
-                    
+
                     if formatted_content != inner_content:
                         new_segment = (
-                            match.group('prefix') + 
-                            match.group('quote') + 
-                            formatted_content + 
-                            match.group('quote')
+                            match.group('prefix')
+                            + match.group('quote')
+                            + formatted_content
+                            + match.group('quote')
                         )
                         replacements.append((start_idx, end_idx, new_segment))
 
     # Apply replacements in reverse order
     replacements.sort(key=lambda x: x[0], reverse=True)
-    
+
     for start, end, text in replacements:
         # verify verification, ensure no overlap?
         # Since we sort reverse, simple string slicing works
         content = content[:start] + text + content[end:]
-        
+
     return content
 
 
@@ -199,9 +201,9 @@ def read_replace(string: str) -> str:
 
 def apply_rule(text: str, rule: RegexRule) -> str:
     regex: Pattern[str] = rule['regex']  # type: ignore
-    group: int = int(rule['group']) # type: ignore
+    group: int = int(rule['group'])  # type: ignore
     substitute: str = str(rule['substitute'])
-    
+
     def replacer(m: 're.Match[str]') -> str:
         # Reconstruct the match preserving surrounding groups, replacing only the target group
         prefix = text[m.start() : m.start(group)]
@@ -216,12 +218,12 @@ def get_regexes() -> List[RegexRule]:
     # Use Path to find regexes.txt relative to this file
     regex_file = Path(__file__).parent / 'regexes.txt'
     rules: List[RegexRule] = []
-    
+
     if not regex_file.exists():
         # Fallback or error?
-        print(f"Warning: regex file not found at {regex_file}", file=sys.stderr)
+        print(f'Warning: regex file not found at {regex_file}', file=sys.stderr)
         return []
-        
+
     with regex_file.open(encoding='utf-8') as f:
         for line in f:
             if line.startswith('#') or not line.strip():
@@ -236,9 +238,11 @@ def get_regexes() -> List[RegexRule]:
             )
     return rules
 
+
 def command_line_file(args: argparse.Namespace) -> Optional[List[str]]:
     """Deprecated internal method kept for compatibility with tests"""
     return run_on_files(args.path, args.python_var, dry_run=args.nothing)
+
 
 if __name__ == '__main__':
     main()
