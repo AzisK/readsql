@@ -22,7 +22,10 @@ uv run readsql file1.sql file2.py folder/               # Process multiple files
 # Run tests
 uv run pytest -v
 
-# Pre-commit (uses black with -S flag, zimports)
+# Type Check (MyPy)
+uv run mypy .
+
+# Pre-commit (uses black with -S flag, ruff)
 pre-commit run --all-files
 ```
 
@@ -36,7 +39,7 @@ The CLI accepts one or multiple files/folders as input. When given a folder, it 
 1. `parse_args()` - Handles CLI arguments (`-s` for string mode, `-n` for dry-run, `-py` for custom Python variable names)
 2. For strings: `read_replace()` applies regex substitutions directly
 3. For files: `read_file()` dispatches to `read_sql_file()` or `read_python_file()` based on extension
-4. `read_python_file()` extracts SQL from variable assignments (default: `query`) using regex, then applies `read_replace()`
+4. `read_python_file()` uses `ast` module to safely extract SQL from variable assignments (default: `query`) while preserving formatting, then applies `read_replace()`
 
 ### Regex Rules (`readsql/regexes.txt`)
 Format: `SUBSTITUTE__REGEX__GROUP` (double underscore delimited)

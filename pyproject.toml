@@ -50,4 +50,14 @@ exclude = ["tests/*_example*.py"]
 [dependency-groups]
 dev = [
     "ruff>=0.14.13",
+    "mypy>=1.0.0",
 ]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
