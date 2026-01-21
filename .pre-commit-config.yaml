@@ -15,7 +15,3 @@ repos:
 #    rev: 0.1.1
 #    hooks:
 #    -   id: readsql
--   repo: https://github.com/sqlalchemyorg/zimports/
-    rev: 0.2.0
-    hooks:
-    -   id: zimports
