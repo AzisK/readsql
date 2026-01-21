@@ -1,6 +1,6 @@
 [project]
 name = "readsql"
-version = "1.0.0"
+version = "1.1.0"
 description = "Convert SQL to most human readable format"
 authors = [{ name = "Azis", email = "azuolas.krusna@yahoo.com" }]
 maintainers = [{ name = "Azis", email = "azuolas.krusna@yahoo.com" }]
