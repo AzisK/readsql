@@ -9,7 +9,7 @@ query = '''
 '''
 
 query = """
-    SELECT * 
+    SELECT *
     FROM languages;
 """
 

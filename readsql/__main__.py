@@ -88,7 +88,9 @@ def read_python_file(path, variables=None):
     # Match a variable assignment (e.g. query = ...), optional f-string,
     # and the string content within matching quotes (single or triple, ' or ").
     regex = re.compile(
-        r'(?:\s*(?:' + pattern + r')\s*=\s*\(?\s*f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*?)(?P=quote)',
+        r'(?:\s*(?:'
+        + pattern
+        + r')\s*=\s*\(?\s*f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*?)(?P=quote)',
         flags=re.DOTALL,
     )
 
