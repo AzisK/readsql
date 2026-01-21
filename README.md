@@ -47,6 +47,12 @@ We can look for different strings in Python files with `-py` arguments
 readsql <FILE_OR_FOLDER_PATH> -py <PY_VAR1> <PY_VAR2>
 ```
 
+> **Note**: `readsql` uses Python's AST parser, so it supports:
+> - **Type Hints**: `query: str = "..."`
+> - **F-strings**: `f"SELECT * FROM {table}"`
+> - **Nested Scopes**: Robustly handles variables inside functions and classes.
+> - **Comments/Docstrings**: Correctly ignores SQL-like text in comments or docstrings.
+
 # Usage examples
 
 1. `readsql 'select sushi from tokyo' -s` command returns

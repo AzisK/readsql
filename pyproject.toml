@@ -1,6 +1,6 @@
 [project]
 name = "readsql"
-version = "1.0.0"
+version = "1.1.0"
 description = "Convert SQL to most human readable format"
 authors = [{ name = "Azis", email = "azuolas.krusna@yahoo.com" }]
 maintainers = [{ name = "Azis", email = "azuolas.krusna@yahoo.com" }]
@@ -50,4 +50,14 @@ exclude = ["tests/*_example*.py"]
 [dependency-groups]
 dev = [
     "ruff>=0.14.13",
+    "mypy>=1.0.0",
 ]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true

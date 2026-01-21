@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-01-22
+
+### Changed
+
+- **Switched to AST-based Python parsing**: Replaced regex-based string extraction with Python's `ast` module.
+  - **Improved Robustness**: Eliminated edge cases where comments or non-assignment strings were incorrectly formatted.
+  - **Enhanced F-string support**: More reliable parsing of SQL within f-strings.
+  - **False Positive Prevention**: Correctly ignores SQL-like text in docstrings and comments, which were previously matched by the regex.
+  - **Strict Targeting**: Only formats strings that are actual variable assignments.
+- **Modernized File Handling**: Adopted `pathlib` for all file system operations.
+- **Type Safety**: Added comprehensive type hints to the codebase.
+
 ## [1.0.0] - 2026-01-21
 
 ### Changed
