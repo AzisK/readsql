@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Optimized
+
+- **Regex Performance**:
+  - Extracted inline regex compilation in `read_python_file` to a module-level constant (`PYTHON_STRING_REGEX`) to prevent recompilation in loops.
+  - Updated `apply_rule` to use compiled regex objects directly (`regex.sub`) instead of `re.sub` for improved performance.
+
 ## [1.1.0] - 2026-01-22
 
 ### Changed

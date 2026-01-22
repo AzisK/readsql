@@ -9,6 +9,11 @@ from typing import Dict, Generator, Iterable, List, Optional, Pattern, Union
 # Define types for regex rules
 RegexRule = Dict[str, Union[str, int, Pattern[str]]]
 
+PYTHON_STRING_REGEX = re.compile(
+    r'^(?P<prefix>[uUrR]?f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*)(?P=quote)$',
+    flags=re.DOTALL,
+)
+
 
 def main() -> None:
     args = parse_args()
@@ -162,11 +167,7 @@ def read_python_file(
                 # Regex to extract quote and content from the raw segment
                 # This handles f-strings and normal strings, ensuring we only touch the inner content
                 # We reuse the logic but applied to the exact segment identified by AST
-                match = re.match(
-                    r'^(?P<prefix>[uUrR]?f?)(?P<quote>"{3}|"{1}|\'{3}|\'{1})(?P<content>.*)(?P=quote)$',
-                    raw_segment,
-                    flags=re.DOTALL,
-                )
+                match = PYTHON_STRING_REGEX.match(raw_segment)
 
                 if match:
                     inner_content = match.group('content')
@@ -206,11 +207,11 @@ def apply_rule(text: str, rule: RegexRule) -> str:
 
     def replacer(m: 're.Match[str]') -> str:
         # Reconstruct the match preserving surrounding groups, replacing only the target group
-        prefix = text[m.start() : m.start(group)]
-        suffix = text[m.end(group) : m.end()]
+        prefix = m.string[m.start() : m.start(group)]
+        suffix = m.string[m.end(group) : m.end()]
         return prefix + substitute + suffix
 
-    return re.sub(regex, replacer, text)
+    return regex.sub(replacer, text)
 
 
 @functools.lru_cache(maxsize=1)
