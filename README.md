@@ -1,3 +1,35 @@
+
+<div align="right">
+  <details>
+    <summary >🌐 Language</summary>
+    <div>
+      <div align="center">
+        <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=en">English</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=zh-CN">简体中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=zh-TW">繁體中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=ja">日本語</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=ko">한국어</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=hi">हिन्दी</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=th">ไทย</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=fr">Français</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=de">Deutsch</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=es">Español</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=it">Italiano</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=ru">Русский</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=pt">Português</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=nl">Nederlands</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=pl">Polski</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=ar">العربية</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=fa">فارسی</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=tr">Türkçe</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=vi">Tiếng Việt</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=id">Bahasa Indonesia</a>
+        | <a href="https://openaitx.github.io/view.html?user=AzisK&project=readsql&lang=as">অসমীয়া</
+      </div>
+    </div>
+  </details>
+</div>
+
 # readsql
 
 Convert SQL to most human readable format. For the time being it upper cases SQL keywords, it might prettify or even suggest improvements of SQL code in the future. It converts SQL code and even SQL-strings in programming languages (only Python at the moment).
