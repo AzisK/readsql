@@ -7,12 +7,12 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Validate version matches tag
         run: |
@@ -28,13 +28,7 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install dependencies
-        run: uv sync --no-dev
-
-      - name: Build package
+      - name: Build and publish to PyPI
         run: |
-          uv pip install --upgrade build
-          uv run python -m build
-
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+          uv build
+          uv publish --trusted-publishing always
